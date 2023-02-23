@@ -8,14 +8,30 @@ on:
   schedule:
     - cron:  '30 22 * * 0'
   workflow_dispatch:
- 
+
 jobs:
+  linting:
+    runs-on: ubuntu-22.04
+    strategy:
+      matrix:
+        py-version: ["3.9", "3.10", "3.11"]
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ./.github/actions/setup-dev-env
+        with:
+          python-version: ${{matrix.py-version}}
+
+      - name: type-checking
+        run: |
+          mypy --strict mypkg
+
   run-tests:
     runs-on: ubuntu-22.04
     strategy:
       matrix:
         py-version: ["3.9", "3.10", "3.11"]
-    
+
     steps:
       - uses: actions/checkout@v2
       - uses: ./.github/actions/setup-dev-env

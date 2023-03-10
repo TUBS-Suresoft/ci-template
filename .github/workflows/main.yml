@@ -17,11 +17,14 @@ jobs:
         with:
           python-version: ${{matrix.py-version}}
 
-      - name: install-mypy
-        run: pip install mypy
+      - name: install-dependencies
+        run: pip install mypy black
 
       - name: run-type-check
         run: mypy --strict hvac
+
+      - name: run-black
+        run: black --check --verbose hvac
 
   run-tests:
     runs-on: ubuntu-22.04

@@ -1,0 +1,15 @@
+name: setup-development-environment
+inputs:
+  python-version:
+    description: "Specify the Python version"
+    required: True
+runs:
+  using: "composite"
+  steps:
+    - uses: actions/setup-python@v2
+      with:
+        python-version: ${{ inputs.version }}
+    - run: |
+        pip install --upgrade pip
+        pip install mypy pytest black
+      shell: bash

@@ -11,14 +11,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-
-      - name: setup-python
-        uses: actions/setup-python@v2
+      - uses: ./.github/actions/setup-dev-environment
         with:
           python-version: ${{matrix.py-version}}
-
-      - name: install-dependencies
-        run: pip install mypy black
 
       - name: run-type-check
         run: mypy --strict hvac
@@ -34,14 +29,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-
-      - name: setup-python
-        uses: actions/setup-python@v2
+      - uses: ./.github/actions/setup-dev-environment
         with:
           python-version: ${{matrix.py-version}}
-
-      - name: install-pytest
-        run: pip install pytest
 
       - name: run-tests
         run: python -m pytest -v

@@ -1,0 +1,20 @@
+name: test-suite
+
+on: [push]
+
+jobs:
+  run-tests:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: setup-python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.11
+
+      - name: install-pytest
+        run: pip install pytest
+
+      - name: run-tests
+        run: python -m pytest -v

@@ -3,6 +3,26 @@ name: test-suite
 on: [push]
 
 jobs:
+  linting:
+    runs-on: ubuntu-22.04
+    strategy:
+      matrix:
+        py-version: ["3.9", "3.10", "3.11"]
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: setup-python
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{matrix.py-version}}
+
+      - name: install-mypy
+        run: pip install mypy
+
+      - name: run-type-check
+        run: mypy --strict hvac
+
   run-tests:
     runs-on: ubuntu-22.04
     strategy:
